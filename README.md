@@ -1,1 +1,1 @@
-# HW-18-SPI-social-network
+# HW-18-API-social-network
