@@ -1,18 +1,36 @@
-// Define Mongoose
-const mongoose = require('mongoose');
+const { Schema, Types, model } = require("mongoose");
 
-const reactionSchema = new mongoose.Schema({
+const dateFormat = (date) => {
+    return date.toLocaleString()
+};
 
-}); 
+const thoughtSchema = new Schema(
+    {
+        thoughtText : {
+            type: String,
+            required: true,
+            minlength: 1,
+            maxlength: [280, "Limit to 280 characters."],
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: dateFormat,
+        },
+        username: {
+            type: String,
+            required: true,
+        },
+    },
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true,
+        }
+    }
+);
 
-const thoughtSchema = new mongoose.Schema({
-reations: [reactionSchema]
-
-
-});
-
-
-const Thought = mongoose.model('Thought', thoughtSchema);
+const Thought = model("Thought", thoughtSchema);
 
 
 const handleError = (err) => console.error(err);
