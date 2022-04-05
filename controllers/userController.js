@@ -12,7 +12,7 @@ module.exports = {
           .select('-__v')
           .then((user) =>
             !user
-              ? res.status(404).json({ message: 'No user with this ID' })
+              ? res.status(404).json({ message: 'No user found with this ID' })
               : res.json(user)
           )
           .catch((err) => res.status(500).json(err));
@@ -33,7 +33,7 @@ module.exports = {
         )
           .then((user) =>
             !user
-              ? res.status(404).json({ message: 'No user with this id!' })
+              ? res.status(404).json({ message: 'No user found with this id!' })
               : res.json(user)
           )
           .catch((err) => res.status(500).json(err));
@@ -42,8 +42,8 @@ module.exports = {
         User.findOneAndDelete({ _id: req.params.userId })
           .then((user) =>
             !user
-              ? res.status(404).json({ message: 'No user with this ID' })
-              : User.deleteMany({ _id: { $in: user.thoughts } })
+              ? res.status(404).json({ message: 'No user found with this ID' })
+              : Thought.deleteMany({ _id: { $in: user.thoughts } })
           )
           .then(() => res.json({ message: 'User and thoughts have been deleted!' }))
           .catch((err) => res.status(500).json(err));
