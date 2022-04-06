@@ -12,7 +12,7 @@ module.exports = {
       .select("-__v")
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: "No thought found with this ID" })
+          ? res.status(404).json({ message: "No thought found with this ID." })
           : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
@@ -30,7 +30,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({
-              message: 'Thought created successfully. No user found with this username',
+              message: 'Thought created successfully. No user found with this username.',
             })
           : res.json(user)
       )
@@ -41,8 +41,20 @@ module.exports = {
     Thought.findByIdAndDelete( req.params.thoughtId )
       .then((thought) =>
         !thought
-          ? res.status(404).json({ message: 'No thought found with this ID' })
-          :  res.json({ message: 'This thought has been deleted' })
+          ? res.status(404).json({ message: 'No thought found with this ID.' })
+          :  res.json({ message: 'This thought has been deleted.' })
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+
+  updateThought(req, res) {
+    Thought.findByIdAndUpdate(req.params.thoughtId,
+        req.body, 
+        { runValidators: true, new: true })
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'No thought with this ID.' })
+          : res.json(thought)
       )
       .catch((err) => res.status(500).json(err));
   },
